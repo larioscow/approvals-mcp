@@ -107,12 +107,21 @@ importers:
       '@approvals-mcp/core':
         specifier: workspace:*
         version: link:../core
+      '@approvals-mcp/db':
+        specifier: workspace:*
+        version: link:../db
       '@modelcontextprotocol/sdk':
         specifier: ^1.29.0
         version: 1.29.0(zod@3.25.76)
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.2(@electric-sql/pglite@0.5.1)(postgres@3.4.9)
       express:
         specifier: ^5.2.1
         version: 5.2.1
+      postgres:
+        specifier: ^3.4.9
+        version: 3.4.9
       zod:
         specifier: ^3.25.76
         version: 3.25.76

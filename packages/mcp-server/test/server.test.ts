@@ -21,7 +21,7 @@ type ElicitHandler = (req: ElicitRequest) => Promise<ElicitResult>;
 async function connect(
   opts: { capabilities?: ClientCapabilities; elicit?: ElicitHandler } = {},
 ): Promise<{ client: Client; service: ApprovalService }> {
-  const deps = createApp({ config: testConfig(), store: new InMemoryDecisionStore() });
+  const deps = await createApp({ config: testConfig(), store: new InMemoryDecisionStore() });
   const server = buildServer({ service: deps.service, specs: deps.specs });
   const [clientTransport, serverTransport] = InMemoryTransport.createLinkedPair();
   await server.connect(serverTransport);

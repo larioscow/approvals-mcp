@@ -6,8 +6,9 @@ export default defineConfig({
   target: 'es2022',
   clean: true,
   dts: false,
-  // Bundle the workspace core (its exports point at .ts source); keep real
+  splitting: false,
+  // Bundle the workspace packages (their exports point at .ts source); keep real
   // npm deps external so they resolve from node_modules at runtime.
-  noExternal: ['@approvals-mcp/core'],
+  noExternal: ['@approvals-mcp/core', '@approvals-mcp/db'],
   banner: { js: '#!/usr/bin/env node' },
 });

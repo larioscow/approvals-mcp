@@ -17,13 +17,15 @@ export interface AppDeps {
 }
 
 /** Wires config → executors → service. One service (state) backs many sessions. */
-export function createApp(opts: { config?: ServerConfig; store?: DecisionStore } = {}): AppDeps {
+export async function createApp(
+  opts: { config?: ServerConfig; store?: DecisionStore } = {},
+): Promise<AppDeps> {
   const config = opts.config ?? loadConfig();
   const specs = defaultActions(
     config.slackWebhookUrl ? { slackWebhookUrl: config.slackWebhookUrl } : {},
   );
   const executors = buildRegistry(specs);
-  const store = opts.store ?? new InMemoryDecisionStore();
+  const store = opts.store ?? (await resolveStore(config));
   const service = new ApprovalService({
     store,
     executors,
@@ -32,6 +34,16 @@ export function createApp(opts: { config?: ServerConfig; store?: DecisionStore }
       : {}),
   });
   return { service, specs, config };
+}
+
+/** Postgres when DATABASE_URL is set (shared with the reviewer), else in-memory. */
+async function resolveStore(config: ServerConfig): Promise<DecisionStore> {
+  if (config.databaseUrl) {
+    const { createPostgresStore } = await import('@approvals-mcp/db/postgres');
+    const { store } = await createPostgresStore(config.databaseUrl);
+    return store;
+  }
+  return new InMemoryDecisionStore();
 }
 
 function webhookEmitter(url: string, secret: string): (event: ApprovalEvent) => void {

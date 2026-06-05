@@ -2,7 +2,7 @@ import { createApp } from './factory';
 import { startHttp } from './http';
 import { startStdio } from './stdio';
 
-const deps = createApp();
+const deps = await createApp();
 if (deps.config.transport === 'stdio') {
   await startStdio(deps);
 } else {

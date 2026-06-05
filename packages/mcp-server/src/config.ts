@@ -4,6 +4,8 @@ export interface ServerConfig {
   webhookSecret: string;
   webhookUrl?: string;
   slackWebhookUrl?: string;
+  /** Postgres connection string. Omit to use the in-memory store. */
+  databaseUrl?: string;
 }
 
 export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
@@ -13,5 +15,6 @@ export function loadConfig(env: NodeJS.ProcessEnv = process.env): ServerConfig {
     webhookSecret: env.APPROVALS_WEBHOOK_SECRET ?? 'change-me',
     ...(env.APPROVALS_WEBHOOK_URL ? { webhookUrl: env.APPROVALS_WEBHOOK_URL } : {}),
     ...(env.SLACK_WEBHOOK_URL ? { slackWebhookUrl: env.SLACK_WEBHOOK_URL } : {}),
+    ...(env.DATABASE_URL ? { databaseUrl: env.DATABASE_URL } : {}),
   };
 }
