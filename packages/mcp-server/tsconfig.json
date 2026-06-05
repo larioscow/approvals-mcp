@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": ".",
+    "types": ["node"],
+    // This is an application that integrates the MCP SDK / Express, whose public
+    // types predate exactOptionalPropertyTypes. EOPT stays on for the libraries
+    // (core, db); here it only produces noise at the third-party boundary.
+    "exactOptionalPropertyTypes": false
+  },
+  "include": ["src", "test"]
+}

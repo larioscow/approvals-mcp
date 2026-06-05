@@ -1,0 +1,31 @@
+{
+  "name": "approvals-mcp",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.33.2",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "lint": "biome check .",
+    "format": "biome format --write ."
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.4.16",
+    "@types/node": "^25.9.1",
+    "tsup": "^8.5.1",
+    "tsx": "^4.22.4",
+    "turbo": "^2.9.16",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.8"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "@tailwindcss/oxide"
+    ]
+  }
+}
